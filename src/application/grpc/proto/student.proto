@@ -1,0 +1,29 @@
+syntax = "proto3";
+package student;
+
+message GetStudentRequest {
+  string id = 1;
+}
+
+message GetStudentResponse {
+  string id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  float gpa = 4;
+}
+
+message AddStudentRequest {
+  string firstname = 1;
+  string lastname = 2;
+  float gpa = 3;
+}
+
+message AddStudentResponse {
+  string id = 1;
+}
+
+service GrpcStudentService {
+  rpc GetStudent (GetStudentRequest) returns (GetStudentResponse);
+
+  rpc AddStudent (AddStudentRequest) returns (AddStudentResponse);
+}
