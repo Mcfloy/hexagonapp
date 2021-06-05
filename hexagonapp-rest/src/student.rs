@@ -2,7 +2,7 @@ mod filters {
     use std::sync::Arc;
     use warp::Filter;
     use super::handlers;
-    use library::student::repository::StudentRepository;
+    use hexagonapp::student::repository::StudentRepository;
 
     pub fn routes<Repo>(student_repository: Arc<Repo>)
         -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone
@@ -27,12 +27,12 @@ mod filters {
 
 mod handlers {
     use std::convert::Infallible;
-    use library::student::repository::StudentRepository;
     use std::sync::Arc;
-    use library::student::{service};
     use uuid::Uuid;
     use warp::http::StatusCode;
     use warp::Reply;
+    use hexagonapp::student::service;
+    use hexagonapp::student::repository::StudentRepository;
 
     pub async fn get_student<Repo>(id: String, student_repository: Arc<Repo>) -> Result<warp::reply::Response, Infallible>
         where Repo: StudentRepository + Send + Sync {
@@ -47,7 +47,10 @@ mod handlers {
                     Some(student) => Ok(warp::reply::json(&student).into_response())
                 }
             }
-            Err(_error) => Ok(StatusCode::INTERNAL_SERVER_ERROR.into_response())
+            Err(error) => {
+                eprintln!("{:?}", error);
+                Ok(StatusCode::INTERNAL_SERVER_ERROR.into_response())
+            }
         }
     }
 }

@@ -4,10 +4,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .build_server(true)
         .compile(
             &[
-                "src/application/grpc/proto/student.proto"
+                "proto/student.proto"
             ],
             &[
-                "src/application/grpc/proto"
+                "proto"
             ]
         )?;
     Ok(())

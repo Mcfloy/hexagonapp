@@ -1,5 +1,5 @@
 [package]
-name = "postgres-repository"
+name = "hexagonapp-mysql"
 version = "0.1.0"
 authors = ["Mcfloy <lucasperreau@gmail.com>"]
 edition = "2018"
@@ -7,12 +7,12 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "postgres_repository"
+name = "hexagonapp_mysql"
 path = "src/lib.rs"
 
 [dependencies]
-library = { path = "../../../library" }
 async-trait = "0.1.50"
 uuid = { version = "0.8.2", features = ["v4"] }
-sqlx = { version = "0.5.5", features = ["postgres", "uuid", "runtime-tokio-native-tls"] }
+sqlx = { version = "0.5.5", features = ["mysql", "uuid", "runtime-tokio-native-tls"] }
 tokio = { version = "1.6.1", features = ["rt-multi-thread", "macros"] }
+hexagonapp = { path = "../hexagonapp" }

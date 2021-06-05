@@ -1,5 +1,5 @@
 use uuid::Uuid;
-use library::student::Student;
+use hexagonapp::student::Student;
 
 #[derive(sqlx::FromRow)]
 pub struct StudentEntity {

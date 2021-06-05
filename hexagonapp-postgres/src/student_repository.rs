@@ -1,25 +1,25 @@
 use sqlx::{Pool, Postgres};
 use async_trait::async_trait;
-use library::student::repository::StudentRepository;
-use library::student::Student;
 use uuid::Uuid;
-use library::student::error::StudentError;
 use crate::student_entity::StudentEntity;
+use hexagonapp::student::repository::StudentRepository;
+use hexagonapp::student::Student;
+use hexagonapp::student::error::StudentError;
 
-pub struct SqlStudentRepository {
+pub struct PostgresStudentRepository {
     pool: Pool<Postgres>
 }
 
-impl SqlStudentRepository {
+impl PostgresStudentRepository {
     pub fn new(pool: Pool<Postgres>) -> Self {
-        SqlStudentRepository {
+        PostgresStudentRepository {
             pool
         }
     }
 }
 
 #[async_trait]
-impl StudentRepository for SqlStudentRepository {
+impl StudentRepository for PostgresStudentRepository {
     async fn find_by_id(&self, id: Uuid) -> Result<Option<Student>, StudentError> {
         match sqlx::query_as::<_, StudentEntity>("SELECT * FROM students WHERE id = $1")
             .bind(id)

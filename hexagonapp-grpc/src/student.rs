@@ -3,8 +3,8 @@ use proto_student::grpc_student_service_server::GrpcStudentService;
 use std::sync::{Arc};
 use tonic::{Status, Response, Request};
 use uuid::Uuid;
-use library::student::repository::StudentRepository;
-use library::student::{service, Student};
+use hexagonapp::student::{service, Student};
+use hexagonapp::student::repository::StudentRepository;
 
 pub mod proto_student {
     tonic::include_proto!("student");
