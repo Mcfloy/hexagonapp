@@ -10,7 +10,7 @@ pub struct StudentEntity {
 }
 
 impl StudentEntity {
-    pub fn to_domain_entity(&self) -> Student {
+    pub fn to_student(&self) -> Student {
         Student::new(self.id, String::from(&self.firstname), String::from(&self.lastname), self.gpa)
     }
 }

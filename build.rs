@@ -4,7 +4,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .build_server(true)
         .compile(
             &[
-                "src/application/grpc/proto/helloworld.proto",
                 "src/application/grpc/proto/student.proto"
             ],
             &[

@@ -1,24 +1,25 @@
-use std::sync::Arc;
 use warp::Filter;
-use sqlx::{Pool, Postgres};
 use sqlx::postgres::PgPoolOptions;
+use std::sync::Arc;
+use postgres_repository::SqlStudentRepository;
 
 pub struct RestServer {
-    database: Pool<Postgres>
+    student_repository: Arc<SqlStudentRepository>
 }
 
 impl RestServer {
     pub async fn new() -> Self {
-        let database = PgPoolOptions::new()
+        let pool = PgPoolOptions::new()
             .max_connections(5)
             .connect("postgres://postgres:password@localhost/test").await
             .expect("Can't open a pool with postgres");
 
         // Instantiate StudentRepository with a pool clone
-        // Instantiate StudentService with the StudentRepository
+        let student_repository = SqlStudentRepository::new(pool);
+
         // store the generated routes in a map
         RestServer {
-            database
+            student_repository: Arc::new(student_repository)
         }
     }
 
@@ -28,7 +29,10 @@ impl RestServer {
 
         println!("Rest server listening to {:?}:{:?}", address, port);
 
-        warp::serve(hello)
+        let routes = super::student::routes(self.student_repository.clone())
+            .or(hello);
+
+        warp::serve(routes)
             .run((address, port))
             .await
     }

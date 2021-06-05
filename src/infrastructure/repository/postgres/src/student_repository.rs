@@ -1,10 +1,10 @@
 use sqlx::{Pool, Postgres};
-use crate::infrastructure::repository::postgres::student_entity::StudentEntity;
 use async_trait::async_trait;
 use library::student::repository::StudentRepository;
 use library::student::Student;
 use uuid::Uuid;
 use library::student::error::StudentError;
+use crate::student_entity::StudentEntity;
 
 pub struct SqlStudentRepository {
     pool: Pool<Postgres>
@@ -25,7 +25,7 @@ impl StudentRepository for SqlStudentRepository {
             .bind(id)
             .fetch_one(&self.pool)
             .await {
-            Ok(student) => Ok(Some(student.to_domain_entity())),
+            Ok(student) => Ok(Some(student.to_student())),
             Err(error) => Err(StudentError::new(error.to_string()))
         }
     }

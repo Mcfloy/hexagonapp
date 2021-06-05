@@ -1,10 +1,8 @@
-use proto_student::{GetStudentRequest, GetStudentResponse};
-use proto_student::{AddStudentRequest, AddStudentResponse};
+use proto_student::{GetStudentRequest, GetStudentResponse, AddStudentRequest, AddStudentResponse};
 use proto_student::grpc_student_service_server::GrpcStudentService;
-use std::sync::{Arc, Mutex, RwLock};
+use std::sync::{Arc};
 use tonic::{Status, Response, Request};
 use uuid::Uuid;
-use library::student::error::StudentError;
 use library::student::repository::StudentRepository;
 use library::student::{service, Student};
 
